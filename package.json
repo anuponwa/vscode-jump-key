@@ -1,11 +1,22 @@
 {
   "name": "jump-key",
   "displayName": "jump-key",
-  "description": "",
+  "description": "A modified version of jump extension that allows you to jump/select to any word-bound location",
   "version": "0.1.0",
   "engines": {
     "vscode": "^1.45.0"
   },
+  "author": {
+    "name": "Anupong Wannakrairot",
+    "email": "anuponwa@scg.com"
+  },
+  "publisher": "AnupongWannakrairot",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anuponwa/vscode-jump-key.git"
+  },
+  "license": "MIT",
+  "icon": "images/aw-relative.png",
   "categories": [
     "Other"
   ],
