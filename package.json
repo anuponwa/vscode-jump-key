@@ -1,0 +1,127 @@
+{
+  "name": "jump-key",
+  "displayName": "jump-key",
+  "description": "",
+  "version": "0.1.0",
+  "engines": {
+    "vscode": "^1.45.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "acejump",
+    "code",
+    "column",
+    "cursor",
+    "easymotion",
+    "emacs",
+    "end",
+    "fast",
+    "go",
+    "goto",
+    "jump",
+    "jumpy",
+    "keyboard",
+    "line",
+    "mark",
+    "move",
+    "movement",
+    "navigation",
+    "neovim",
+    "productivity",
+    "quick",
+    "rapid",
+    "relative",
+    "select",
+    "shortcut",
+    "start",
+    "to",
+    "util",
+    "utility",
+    "vim",
+    "word"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "jump-key.jump-to-the-start-of-a-word",
+        "title": "Jump to the start of a word"
+      },
+      {
+        "command": "jump-key.jump-to-the-end-of-a-word",
+        "title": "Jump to the end of a word"
+      },
+      {
+        "command": "jump-key.select-to-the-start-of-a-word",
+        "title": "Select to the start of a word"
+      },
+      {
+        "command": "jump-key.select-to-the-end-of-a-word",
+        "title": "Select to the end of a word"
+      },
+      {
+        "command": "jump-key.exit",
+        "title": "Exit jump mode"
+      }
+    ],
+    "keybindings": [
+      {
+        "key": "Alt+,",
+        "command": "jump-key.jump-to-the-start-of-a-word",
+        "when": "editorTextFocus"
+      },
+      {
+        "key": "Alt+.",
+        "command": "jump-key.jump-to-the-end-of-a-word",
+        "when": "editorTextFocus"
+      },
+      {
+        "key": "Alt+shift+,",
+        "command": "jump-key.select-to-the-start-of-a-word",
+        "when": "editorTextFocus"
+      },
+      {
+        "key": "Alt+shift+.",
+        "command": "jump-key.select-to-the-end-of-a-word",
+        "when": "editorTextFocus"
+      },
+      {
+        "key": "escape",
+        "command": "jump-key.exit",
+        "when": "editorTextFocus && jump.isInJumpMode"
+      },
+      {
+        "key": "space",
+        "command": "jump-key.exit",
+        "when": "editorTextFocus && jump.isInJumpMode"
+      },
+      {
+        "key": "enter",
+        "command": "jump-key.exit",
+        "when": "editorTextFocus && jump.isInJumpMode"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.45.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.x",
+    "@typescript-eslint/eslint-plugin": "^8.31.1",
+    "@typescript-eslint/parser": "^8.31.1",
+    "eslint": "^9.25.1",
+    "typescript": "^5.8.3",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.5.2"
+  }
+}
