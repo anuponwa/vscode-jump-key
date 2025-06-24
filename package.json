@@ -2,7 +2,7 @@
   "name": "jump-key",
   "displayName": "jump-key",
   "description": "A modified version of jump extension that allows you to jump/select to any word-bound location",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "engines": {
     "vscode": "^1.45.0"
   },

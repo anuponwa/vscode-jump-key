@@ -53,9 +53,9 @@ const DEFAULT_USE_ICONS = false
 const DATA_URI = Uri.parse('data:')
 
 // const DEFAULT_COLOR = '#0af0c1'
-const DEFAULT_COLOR = '#99d1db'
+const DEFAULT_COLOR = '#292c3c'
 // const DEFAULT_BACKGROUND_COLOR = '#004455'
-const DEFAULT_BACKGROUND_COLOR = '#292c3c88'
+const DEFAULT_BACKGROUND_COLOR = '#99d1db'
 
 export class Settings implements ExtensionComponent {
     private decorationOptions: DecorationOptions
