@@ -1,5 +1,8 @@
 # Change Log
 
+### 0.1.2
+- Update overlay display
+
 ### 0.1.1
 - Update default colors
 
