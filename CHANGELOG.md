@@ -1,5 +1,8 @@
 # Change Log
 
+### 0.2.0
+- Add multi-cursor support
+
 ### 0.1.2
 - Update overlay display
 

@@ -7,6 +7,7 @@ import {
     Range,
     Selection,
     TextEditor,
+    TextEditorRevealType,
     window,
     workspace,
 } from 'vscode'
@@ -22,6 +23,8 @@ const enum Command {
     EnterEOW = 'jump-key.jump-to-the-end-of-a-word',
     EnterSelect = 'jump-key.select-to-the-start-of-a-word',
     EntereSelectEOW = 'jump-key.select-to-the-end-of-a-word',
+    AddCursor = 'jump-key.add-cursor-to-the-start-of-a-word',
+    AddCursorEOW = 'jump-key.add-cursor-to-the-end-of-a-word',
 }
 
 const enum Event {
@@ -44,6 +47,7 @@ interface StateJumpActive {
     isInJumpMode: true
     matchStartOfWord: boolean
     expandSelection: boolean
+    addCursorMode: boolean
     editor: TextEditor
     typedCharacters: string
 }
@@ -52,6 +56,7 @@ interface StateJumpInactive {
     isInJumpMode: false
     matchStartOfWord: boolean
     expandSelection: boolean
+    addCursorMode: boolean
     editor: undefined
     typedCharacters: string
 }
@@ -66,6 +71,8 @@ const HANDLE_NAMES = [
     Command.EnterEOW,
     Command.EnterSelect,
     Command.EntereSelectEOW,
+    Command.AddCursor,
+    Command.AddCursorEOW,
     Event.ConfigChanged,
     Event.ActiveEditorChanged,
     Event.ActiveSelectionChanged,
@@ -78,6 +85,7 @@ const DEFAULT_STATE: State = {
     typedCharacters: '',
     matchStartOfWord: true,
     expandSelection: false,
+    addCursorMode: false,
 }
 const TYPE_REGEX = /\w/
 
@@ -93,6 +101,7 @@ export class Jump implements ExtensionComponent {
             isInJumpMode: false,
             matchStartOfWord: true,
             expandSelection: false,
+            addCursorMode: false,
             editor: undefined,
             typedCharacters: '',
         }
@@ -104,6 +113,8 @@ export class Jump implements ExtensionComponent {
             [Command.EnterEOW]: null,
             [Command.EnterSelect]: null,
             [Command.EntereSelectEOW]: null,
+            [Command.AddCursor]: null,
+            [Command.AddCursorEOW]: null,
             [Event.ConfigChanged]: null,
             [Event.ActiveEditorChanged]: null,
             [Event.ActiveSelectionChanged]: null,
@@ -117,17 +128,23 @@ export class Jump implements ExtensionComponent {
         this.settings.activate()
 
         this.handles[Command.Enter] = commands.registerCommand(Command.Enter, () =>
-            this.handleEnterJumpMode(true, false),
+            this.handleEnterJumpMode(true, false, false),
         )
         this.handles[Command.EnterEOW] = commands.registerCommand(Command.EnterEOW, () =>
-            this.handleEnterJumpMode(false, false),
+            this.handleEnterJumpMode(false, false, false),
         )
         this.handles[Command.Exit] = commands.registerCommand(Command.Exit, this.handleExitJumpMode)
         this.handles[Command.EnterSelect] = commands.registerCommand(Command.EnterSelect, () =>
-            this.handleEnterJumpMode(true, true),
+            this.handleEnterJumpMode(true, true, false),
         )
         this.handles[Command.EntereSelectEOW] = commands.registerCommand(Command.EntereSelectEOW, () =>
-            this.handleEnterJumpMode(false, true),
+            this.handleEnterJumpMode(false, true, false),
+        )
+        this.handles[Command.AddCursor] = commands.registerCommand(Command.AddCursor, () =>
+            this.handleEnterJumpMode(true, false, true),
+        )
+        this.handles[Command.AddCursorEOW] = commands.registerCommand(Command.AddCursorEOW, () =>
+            this.handleEnterJumpMode(false, false, true),
         )
         this.handles[Event.ConfigChanged] = workspace.onDidChangeConfiguration(this.handleConfigChange)
         this.handles[Event.ActiveSelectionChanged] = window.onDidChangeTextEditorSelection(
@@ -200,7 +217,7 @@ export class Jump implements ExtensionComponent {
         }
     }
 
-    private handleEnterJumpMode = (matchStartOfWord = true, expandSelection = false): void => {
+    private handleEnterJumpMode = (matchStartOfWord = true, expandSelection = false, addCursorMode = false): void => {
         this.state.isInJumpMode && this.handleExitJumpMode()
 
         const activeEditor = window.activeTextEditor
@@ -217,6 +234,7 @@ export class Jump implements ExtensionComponent {
 
         this.state.matchStartOfWord = matchStartOfWord
         this.state.expandSelection = expandSelection
+        this.state.addCursorMode = addCursorMode
         this.state.editor = activeEditor
 
         this.showDecorations()
@@ -267,11 +285,25 @@ export class Jump implements ExtensionComponent {
                 commands.executeCommand('cursorRightSelect')
             }
         } else {
-            this.state.editor.selection = new Selection(line, char, line, char)
+            const hasSelection = !this.state.editor.selection.isEmpty
+            if (!this.state.addCursorMode || hasSelection) {
+                this.state.editor.selection = new Selection(line, char, line, char)
 
-            if (line && char && this.settings.cursorSurroundingLines) {
-                commands.executeCommand('cursorLeft')
-                commands.executeCommand('cursorRight')
+                if (line && char && this.settings.cursorSurroundingLines) {
+                    commands.executeCommand('cursorLeft')
+                    commands.executeCommand('cursorRight')
+                }
+            }
+            else {
+                const newPosition = new Position(line, char)
+                const newSelections = [...this.state.editor.selections]
+                newSelections.push(new Selection(line, char, line, char))
+                this.state.editor.selections = newSelections
+                this.state.editor.revealRange(new Range(newPosition, newPosition), TextEditorRevealType.InCenter)
+
+                // this.showDecorations()
+                // this.state.typedCharacters = '' // Reset to allow more cursor adds
+                // return
             }
         }
 

@@ -2,7 +2,7 @@
   "name": "jump-key",
   "displayName": "jump-key",
   "description": "A modified version of jump extension that allows you to jump/select to any word-bound location",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "engines": {
     "vscode": "^1.45.0"
   },
@@ -74,6 +74,14 @@
         "title": "Select to the end of a word"
       },
       {
+        "command": "jump-key.add-cursor-to-the-start-of-a-word",
+        "title": "Add a cursor to the start of a word"
+      },
+      {
+        "command": "jump-key.add-cursor-to-the-end-of-a-word",
+        "title": "Add a cursor to the end of a word"
+      },
+      {
         "command": "jump-key.exit",
         "title": "Exit jump mode"
       }
@@ -97,6 +105,16 @@
       {
         "key": "Alt+shift+.",
         "command": "jump-key.select-to-the-end-of-a-word",
+        "when": "editorTextFocus"
+      },
+      {
+        "key": "Alt+ctrl+,",
+        "command": "jump-key.add-cursor-to-the-start-of-a-word",
+        "when": "editorTextFocus"
+      },
+      {
+        "key": "Alt+ctrl+.",
+        "command": "jump-key.add-cursor-to-the-end-of-a-word",
         "when": "editorTextFocus"
       },
       {

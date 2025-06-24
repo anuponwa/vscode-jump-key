@@ -8,6 +8,9 @@ This extension is *HEAVILY* based on `jump` extension from Wenfang Du. I adjuste
 - Jump to the end of character groups with character-codes inserted in those jumpable places. `Alt+.`
 - Select to the start of character groups with character-codes inserted in those jumpable places. `Alt+shift+,`
 - Select to the end of character groups with character-codes inserted in those jumpable places. `Alt+shift+.`
+- Now support multi-cursor!!
+- Add a cursor to the start of a word. `Alt+ctrl+,`
+- Add a cursor to the end of a word. `Alt+ctrl+.`
 
 The character-codes inserted use color and background color that are nice to the eyes, and match my favorite color theme: Catppuccin Frappe.
 
@@ -18,6 +21,9 @@ The only issue I might improve in the future is the key tracking while in jump m
 Now if you mess up or want to change keys you pressed, it doesn't work.
 
 ## Release Notes
+
+### 0.2.0
+- Add multi-cursor support
 
 ### 0.1.2
 - Update overlay display
