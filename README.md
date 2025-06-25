@@ -4,8 +4,8 @@ This extension is *HEAVILY* based on `jump` extension from Wenfang Du. I adjuste
 
 ## Features
 
-- Jump to the start of character groups with character-codes inserted in those jumpable places. `Alt+,`
-- Jump to the end of character groups with character-codes inserted in those jumpable places. `Alt+.`
+- Jump to the start of character groups and empty pairs (`""`, `''`, `()`, `[]`, `{}`) with character-codes inserted in those jumpable places. `Alt+,`
+- Jump to the end of character groups and empty pairs (`""`, `''`, `()`, `[]`, `{}`) with character-codes inserted in those jumpable places. `Alt+.`
 - Select to the start of character groups with character-codes inserted in those jumpable places. `Alt+shift+,`
 - Select to the end of character groups with character-codes inserted in those jumpable places. `Alt+shift+.`
 - Now support multi-cursor!!
@@ -21,6 +21,11 @@ The only issue I might improve in the future is the key tracking while in jump m
 Now if you mess up or want to change keys you pressed, it doesn't work.
 
 ## Release Notes
+
+### 0.3.0
+- Add jump to empty matching pairs like: `""`, `''`, `()`, `[]`, `{}` there can be spaces inside those pairs.
+- Jump to start -> jump to inside of the empty pair
+- Jump to end -> Jump to after the closing empty pair
 
 ### 0.2.0
 - Add multi-cursor support

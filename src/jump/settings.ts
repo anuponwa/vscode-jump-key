@@ -45,9 +45,11 @@ interface DecorationOptions {
 
 // Default values
 const DEFAULT_REGEX_FLAGS = 'gi'
-// const DEFAULT_JUMP_REGEXP = /[\wА-яЁё]{2,}/g
-const DEFAULT_JUMP_REGEXP = /\b[\wА-яЁё]/g;
-const DEFAUlT_JUMP_REGEXP_EOW = /(?<=[\wА-яЁё])(\b|-|\s|,|\.)/gi
+// const DEFAULT_JUMP_REGEXP = /[\wА-яЁё]{2,}/g // original
+// const DEFAULT_JUMP_REGEXP = /\b[\wА-яЁё]/g; // working version, get all the words and numbers
+const DEFAULT_JUMP_REGEXP = /(?<=["'([{])\s*(?=["')\]}])|\b[\wА-яЁё]/g;
+// const DEFAUlT_JUMP_REGEXP_EOW = /(?<=[\wА-яЁё])(\b|-|\s|,|\.)/gi // working version, get all the EOW and numbers
+const DEFAUlT_JUMP_REGEXP_EOW = /(?<=["'([{]\s*["')\]}])|(?<=[\wА-яЁё])(\b|-|\s|,|\.)/gi;
 const DEFAULT_USE_ICONS = true
 
 const DATA_URI = Uri.parse('data:')
