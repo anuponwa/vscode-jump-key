@@ -350,6 +350,30 @@ export class Jump implements ExtensionComponent {
                 )
             }
 
+            // Handle empty/whitespace-only lines manually
+            if (lines[i].isEmptyOrWhitespace) {
+                if (positionCount >= maxDecorations) {
+                    break
+                }
+
+                const code = this.settings.codes[positionCount++]
+                const position = {
+                    line: lines[i].lineNumber,
+                    char: 0,
+                }
+
+                const { line } = position
+                const char = position.char + this.settings.charOffset
+
+                this.positions[code] = position
+                decorationOptions.push({
+                    range: new Range(line, char, line, char),
+                    renderOptions: this.settings.getOptions(code),
+                })
+
+                continue // skip regex-based match for this line
+            }
+
             for (const match of matches) {
                 if (positionCount >= maxDecorations) {
                     break

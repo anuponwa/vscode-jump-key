@@ -31,5 +31,6 @@ export function getVisibleLines(editor: TextEditor): null | TextLine[] {
         }
     }
 
-    return visibleLines.filter((textLine): boolean => textLine.isEmptyOrWhitespace === false)
+    // return visibleLines.filter((textLine): boolean => textLine.isEmptyOrWhitespace === false)
+    return visibleLines
 }
